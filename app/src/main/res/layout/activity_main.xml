@@ -146,16 +146,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_apellido_materno" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="@color/color_primario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
 
-<!--        Crea 3 botones para que diga Alumnos, Home , Matricula, se tiene que distribuir los espacion de forma equitativa-->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Alumnos"
+            android:layout_margin="6dp"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:text="Home" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:text="Matricula" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
