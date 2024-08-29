@@ -1,14 +1,14 @@
-package edward.mamani.matriculacrud.ui.home;
+package edward.mamani.matriculacrud.ui.matricula;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class MatriculaViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public MatriculaViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

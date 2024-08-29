@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="edward.mamani.matriculacrud.ui.home.HomeFragment"
+        android:name="edward.mamani.matriculacrud.ui.matricula.MatriculaFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_matricula" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
