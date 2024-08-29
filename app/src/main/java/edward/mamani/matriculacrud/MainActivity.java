@@ -1,5 +1,6 @@
 package edward.mamani.matriculacrud;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import edward.mamani.matriculacrud.DB.DatabaseManager;
 import edward.mamani.matriculacrud.DB.Index;
 import edward.mamani.matriculacrud.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private ActivityMainBinding binding;
     private DatabaseManager dbManager;

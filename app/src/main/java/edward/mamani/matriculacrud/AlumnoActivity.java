@@ -1,5 +1,6 @@
 package edward.mamani.matriculacrud;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import edward.mamani.matriculacrud.databinding.ActivityAlumnoBinding;
 
 
 
-public class AlumnoActivity extends AppCompatActivity {
+public class AlumnoActivity extends Activity {
 
     private ActivityAlumnoBinding binding;
     private AlumnoAdapter adapter;
@@ -40,13 +41,6 @@ public class AlumnoActivity extends AppCompatActivity {
         dbManager = new DatabaseManager(this);
         listAlumnos = new ArrayList<>();
 
-        // Configurar los ajustes de Edge to Edge y las barras de sistema
-        EdgeToEdge.enable(this);
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         initBtn();
         initRecycler();
