@@ -15,5 +15,10 @@ public class MainActivity extends AppCompatActivity {
         // Inflar el diseño y obtener el binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        initBtn();
+    }
+
+    private void initBtn(){
+
     }
 }
