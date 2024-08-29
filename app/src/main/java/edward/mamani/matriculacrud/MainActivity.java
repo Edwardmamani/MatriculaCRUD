@@ -3,6 +3,7 @@ package edward.mamani.matriculacrud;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     String apellidoPaterno;
     String apellidoMaterno;
 
-    private int id_alumno = -1;
+    private long id_alumno = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         dbManager = new DatabaseManager(this);
-        id_alumno = getIntent().getExtras().getInt("id", -1);
+
+        id_alumno = getIntent().getLongExtra("id_alumno", -1);
         initUI();
         initBtn();
     }
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 dbManager.addAlumno(dni, name, apellidoPaterno, apellidoMaterno);
             }
+            Toast.makeText(this, "ALumno Matriculado "+ name, Toast.LENGTH_SHORT).show();
             clearDataUI();
         });
 
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validDataUI() {
-        return  dni.isEmpty() || name.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty();
+        return  !(dni.isEmpty() || name.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty());
     }
 
     private void getDataUI() {

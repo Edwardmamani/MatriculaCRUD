@@ -60,17 +60,21 @@ public class AlumnoActivity extends AppCompatActivity {
         getAllAllumnos();
     }
     private void update(Alumno alumno){
-        // Lógica para actualizar el alumno
-        Toast.makeText(this,"Actualizar: "+alumno.getDni(),Toast.LENGTH_SHORT).show();
+
+        Log.d("Database", "ID: " + alumno.getId() + ", DNI: " + alumno.getDni() + ", Nombre: " + alumno.getNombre()
+                + ", Apellido Materno: " + alumno.getApellidoMaterno() + ", Apellido Paterno: " + alumno.getApellidoPaterno());
+
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("id",alumno.getId());
+        intent.putExtra("id_alumno",alumno.getId());
         startActivity(intent);
     }
 
     private void delete(Alumno alumno){
-        // Lógica para eliminar el alumno
-        Toast.makeText(this,"Delete: "+alumno.getDni(),Toast.LENGTH_SHORT).show();
+        Log.d("Database", "ID: " + alumno.getId() + ", DNI: " + alumno.getDni() + ", Nombre: " + alumno.getNombre()
+                + ", Apellido Materno: " + alumno.getApellidoMaterno() + ", Apellido Paterno: " + alumno.getApellidoPaterno());
+
+
         dbManager.deleteAlumno(alumno.getId());
         getAllAllumnos();
     }
@@ -94,8 +98,8 @@ public class AlumnoActivity extends AppCompatActivity {
                 listAlumnos.add(alumno);
 
                 // Registrar los datos en el log
-                Log.d("Database", "ID: " + id + ", DNI: " + dni + ", Nombre: " + name
-                        + ", Apellido Materno: " + apellidoMaterno + ", Apellido Paterno: " + apellidoPaterno);
+                Log.d("Database", "ID: " + alumno.getId() + ", DNI: " + alumno.getDni() + ", Nombre: " + alumno.getNombre()
+                        + ", Apellido Materno: " + alumno.getApellidoMaterno() + ", Apellido Paterno: " + alumno.getApellidoPaterno());
 
             } while (cursor.moveToNext());
 
