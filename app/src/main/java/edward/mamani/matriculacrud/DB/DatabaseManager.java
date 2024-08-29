@@ -1,9 +1,7 @@
 package edward.mamani.matriculacrud.DB;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -52,41 +50,48 @@ public class DatabaseManager {
     }
 
     public long addAlumno(String dni, String name, String apellidoMaterno, String apellidoPaterno) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DNI, dni);
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_APELLIDO_MATERNO, apellidoMaterno);
-        values.put(COLUMN_APELLIDO_PATERNO, apellidoPaterno);
-        return database.insert(TABLE_ALUMNOS, null, values);
+        String insertSQL = "INSERT INTO " + TABLE_ALUMNOS + " (" +
+                COLUMN_DNI + ", " +
+                COLUMN_NAME + ", " +
+                COLUMN_APELLIDO_MATERNO + ", " +
+                COLUMN_APELLIDO_PATERNO + ") VALUES (?, ?, ?, ?)";
+
+        Object[] params = new Object[]{dni, name, apellidoMaterno, apellidoPaterno};
+
+        database.execSQL(insertSQL, params);
+
+        return 0;
     }
+
 
     public Cursor getAllAlumnos() {
-        return database.query(TABLE_ALUMNOS, null, null, null, null, null, null);
+        String sqlGetAll = "SELECT * FROM " + TABLE_ALUMNOS;
+        return database.rawQuery(sqlGetAll, null);
     }
 
+
     public Cursor getAlumno(long id) {
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-        return database.query(TABLE_ALUMNOS, null, selection, selectionArgs, null, null, null);
+        String sqlGetAlumno = "SELECT * FROM " + TABLE_ALUMNOS + " WHERE " + COLUMN_ID + " = ?";
+        return database.rawQuery(sqlGetAlumno, new String[]{String.valueOf(id)});
     }
 
     public int updateAlumno(long id, String dni, String name, String apellidoMaterno, String apellidoPaterno) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DNI, dni);
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_APELLIDO_MATERNO, apellidoMaterno);
-        values.put(COLUMN_APELLIDO_PATERNO, apellidoPaterno);
+        String sql = "UPDATE " + TABLE_ALUMNOS + " SET " +
+                COLUMN_DNI + " = ?, " +
+                COLUMN_NAME + " = ?, " +
+                COLUMN_APELLIDO_MATERNO + " = ?, " +
+                COLUMN_APELLIDO_PATERNO + " = ? " +
+                "WHERE " + COLUMN_ID + " = ?";
 
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-        return database.update(TABLE_ALUMNOS, values, selection, selectionArgs);
+        database.execSQL(sql, new Object[]{dni, name, apellidoMaterno, apellidoPaterno, id});
+        return 1;
     }
 
-    public int deleteAlumno(long id) {
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-        return database.delete(TABLE_ALUMNOS, selection, selectionArgs);
+    public void deleteAlumno(long id) {
+        String sql = "DELETE FROM " + TABLE_ALUMNOS + " WHERE " + COLUMN_ID + " = ?";
+        database.execSQL(sql, new Object[]{String.valueOf(id)});
     }
+
 
     public void close() {
         if (database != null && database.isOpen()) {

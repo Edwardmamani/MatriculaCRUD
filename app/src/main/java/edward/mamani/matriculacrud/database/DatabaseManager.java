@@ -30,13 +30,7 @@ public class DatabaseManager {
     }
 
     // Método seguro para ejecutar una sentencia SQL INSERT
-    public void insertAlumno(String nombre, String dni) {
-        // SQL INSERT con marcadores de posición
-        String insertSQL = "INSERT INTO alumnos (nombre, dni) VALUES (?, ?)";
 
-        // Ejecutar la sentencia SQL utilizando execSQL con un array de parámetros
-        database.execSQL(insertSQL, new Object[]{nombre, dni});
-    }
 
 
     // Método seguro para ejecutar una sentencia SQL UPDATE
