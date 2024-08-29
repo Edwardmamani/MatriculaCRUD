@@ -38,6 +38,7 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoView
 
         public void bind(Alumno alumno) {
             binding.textViewDNI.setText(alumno.getDni());
+            binding.textViewNOMBRE.setText(alumno.getNombre());
             binding.buttonEdit.setOnClickListener(v -> update.accept(alumno));
             binding.buttonDelete.setOnClickListener(v -> delete.accept(alumno));
         }

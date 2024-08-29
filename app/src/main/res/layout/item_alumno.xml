@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -14,20 +15,38 @@
         android:padding="8dp">
 
         <!-- Campo para mostrar el DNI -->
-        <TextView
-            android:id="@+id/textViewDNI"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="DNI"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/layoutOpciones"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0" />
+
 
         <!-- Layout para contener las opciones de Editar y Borrar -->
+
+        <TextView
+            android:id="@+id/textViewNOMBRE"
+            android:layout_width="179dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:text="NOMBRE"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewDNI"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.571" />
+
+        <TextView
+            android:id="@+id/textViewDNI"
+            android:layout_width="98dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="16dp"
+            android:text="45987815"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/layoutOpciones"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+
         <LinearLayout
             android:id="@+id/layoutOpciones"
             android:layout_width="wrap_content"
