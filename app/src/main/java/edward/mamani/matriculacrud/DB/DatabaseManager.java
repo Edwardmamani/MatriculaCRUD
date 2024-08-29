@@ -10,11 +10,11 @@ public class DatabaseManager {
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_ALUMNOS = "alumnos";
-    private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_DNI = "dni";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_APELLIDO_MATERNO = "apellido_materno";
-    private static final String COLUMN_APELLIDO_PATERNO = "apellido_paterno";
+    static final String COLUMN_ID = "_id";
+    static final String COLUMN_DNI = "dni";
+    static final String COLUMN_NAME = "name";
+    static final String COLUMN_APELLIDO_MATERNO = "apellido_materno";
+    static final String COLUMN_APELLIDO_PATERNO = "apellido_paterno";
 
     private static final String TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_ALUMNOS + " (" +
