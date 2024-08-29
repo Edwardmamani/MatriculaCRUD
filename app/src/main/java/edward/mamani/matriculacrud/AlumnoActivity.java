@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edward.mamani.matriculacrud.DB.DatabaseManager;
+import edward.mamani.matriculacrud.DB.Index;
 import edward.mamani.matriculacrud.adapter.AlumnoAdapter;
 import edward.mamani.matriculacrud.databinding.ActivityAlumnoBinding;
+
+
 
 public class AlumnoActivity extends AppCompatActivity {
 
@@ -50,34 +54,43 @@ public class AlumnoActivity extends AppCompatActivity {
 
     private void initRecycler() {
         // Inicializa el LayoutManager y configura el RecyclerView
-        adapter = new AlumnoAdapter(listAlumnos); // Asegúrate de que listAlumnos esté inicializada
+        adapter = new AlumnoAdapter(listAlumnos, this::update, this::delete);  // Asegúrate de que listAlumnos esté inicializada
         binding.recyclerAlumnos.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerAlumnos.setAdapter(adapter);
         getAllAllumnos();
     }
+    private void update(Alumno alumno){
+        // Lógica para actualizar el alumno
+        Toast.makeText(this,"Actualizar: "+alumno.getDni(),Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("id",alumno.getId());
+        startActivity(intent);
+    }
+
+    private void delete(Alumno alumno){
+        // Lógica para eliminar el alumno
+        Toast.makeText(this,"Delete: "+alumno.getDni(),Toast.LENGTH_SHORT).show();
+        dbManager.deleteAlumno(alumno.getId());
+        getAllAllumnos();
+    }
+
 
     private void getAllAllumnos() {
         Cursor cursor = dbManager.getAllAlumnos();
 
         if (cursor != null && cursor.moveToFirst()) {
             listAlumnos.clear();
-
-            // Obtener los índices de las columnas
-            int idIndex = cursor.getColumnIndex("_id");
-            int dniIndex = cursor.getColumnIndex("dni");
-            int nameIndex = cursor.getColumnIndex("name");
-            int apellidoMaternoIndex = cursor.getColumnIndex("apellido_materno");
-            int apellidoPaternoIndex = cursor.getColumnIndex("apellido_paterno");
-
+            Index i = new Index(cursor);
             do {
                 // Leer datos del cursor
-                long id = cursor.getLong(idIndex);
-                String dni = cursor.getString(dniIndex);
-                String name = cursor.getString(nameIndex);
-                String apellidoMaterno = cursor.getString(apellidoMaternoIndex);
-                String apellidoPaterno = cursor.getString(apellidoPaternoIndex);
+                long id = cursor.getLong(i.idIndex);
+                String dni = cursor.getString(i.dniIndex);
+                String name = cursor.getString(i.nameIndex);
+                String apellidoMaterno = cursor.getString(i.apellidoMaternoIndex);
+                String apellidoPaterno = cursor.getString(i.apellidoPaternoIndex);
 
-                Alumno alumno = new Alumno(dni, name, apellidoPaterno, apellidoMaterno);
+                Alumno alumno = new Alumno(id,dni, name, apellidoPaterno, apellidoMaterno);
                 listAlumnos.add(alumno);
 
                 // Registrar los datos en el log

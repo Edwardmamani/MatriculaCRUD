@@ -1,18 +1,27 @@
 package edward.mamani.matriculacrud;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import edward.mamani.matriculacrud.DB.DatabaseManager;
+import edward.mamani.matriculacrud.DB.Index;
 import edward.mamani.matriculacrud.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private DatabaseManager dbManager;
+
+    String dni;
+    String name;
+    String apellidoPaterno;
+    String apellidoMaterno;
+
+    private int id_alumno = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +29,28 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         dbManager = new DatabaseManager(this);
+        id_alumno = getIntent().getExtras().getInt("id", -1);
+        initUI();
         initBtn();
+    }
+
+    private void initUI() {
+        if(id_alumno != -1){
+            setDataUI();
+        }
     }
 
     private void initBtn(){
         binding.btnMatricular.setOnClickListener(v -> {
-            addAlumno();
+            getDataUI();
+            if(!validDataUI()) return;
+            if(id_alumno != -1){
+                // ACTUALIZAMOS AL ALUMNO
+                dbManager.updateAlumno(id_alumno,dni,name,apellidoMaterno,apellidoPaterno);
+            } else {
+                dbManager.addAlumno(dni, name, apellidoPaterno, apellidoMaterno);
+            }
+            clearDataUI();
         });
 
         binding.btnAlumnos.setOnClickListener(v -> {
@@ -33,22 +58,42 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+    private void setDataUI() {
+        Cursor cursor = dbManager.getAlumno(id_alumno);
+        Index i = new Index(cursor);
+        if (cursor != null && cursor.moveToFirst()) {
 
-    private void addAlumno() {
-        // VALIDACION DE DATOS
-        String dni = binding.dni.getText().toString().trim();
-        String name = binding.nombres.getText().toString().trim();
-        String apellidoPaterno = binding.apellidoParteno.getText().toString().trim();
-        String apellidoMaterno = binding.apellidoMaterno.getText().toString().trim();
+            String dni = cursor.getString(i.dniIndex);
+            String name = cursor.getString(i.nameIndex);
+            String apellidoPaterno = cursor.getString(i.apellidoPaternoIndex);
+            String apellidoMaterno = cursor.getString(i.apellidoMaternoIndex);
 
-        if (dni.isEmpty() || name.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty()) {
-            // Mostrar un mensaje de error si algún campo está vacío
-            Toast.makeText(getApplicationContext(), "Todos los campos deben ser completados", Toast.LENGTH_SHORT).show();
-        } else {
-            // Agregar el alumno a la base de datos
-            dbManager.addAlumno(dni, name, apellidoPaterno, apellidoMaterno);
-            // Mostrar un mensaje de éxito
-            Toast.makeText(getApplicationContext(), "Alumno matriculado con éxito", Toast.LENGTH_SHORT).show();
+            binding.dni.setText(dni);
+            binding.nombres.setText(name);
+            binding.apellidoParteno.setText(apellidoPaterno);
+            binding.apellidoMaterno.setText(apellidoMaterno);
         }
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    private void clearDataUI() {
+        binding.dni.setText("");
+        binding.nombres.setText("");
+        binding.apellidoParteno.setText("");
+        binding.apellidoMaterno.setText("");
+    }
+
+    private boolean validDataUI() {
+        return  dni.isEmpty() || name.isEmpty() || apellidoPaterno.isEmpty() || apellidoMaterno.isEmpty();
+    }
+
+    private void getDataUI() {
+        dni = binding.dni.getText().toString().trim();
+        name = binding.nombres.getText().toString().trim();
+        apellidoPaterno = binding.apellidoParteno.getText().toString().trim();
+        apellidoMaterno = binding.apellidoMaterno.getText().toString().trim();
+
     }
 }

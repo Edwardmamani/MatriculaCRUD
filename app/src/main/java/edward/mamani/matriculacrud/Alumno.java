@@ -1,20 +1,25 @@
 package edward.mamani.matriculacrud;
 
 public class Alumno {
+    private long id;
     private String dni;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
 
     // Constructor
-    public Alumno(String dni, String nombre, String apellidoPaterno, String apellidoMaterno) {
+    public Alumno(long id, String dni, String nombre, String apellidoPaterno, String apellidoMaterno) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
     }
-
     // Getters y Setters
+    public long getId(){
+        return id;
+    }
+
     public String getDni() {
         return dni;
     }
